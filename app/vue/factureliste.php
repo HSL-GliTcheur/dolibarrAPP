@@ -19,7 +19,8 @@
                     <?= $invoice['id'] ?>
                 </td>
                 <td>
-                    <?= $invoice['ref'] ?>
+                    <a href="./voir/<?= $invoice['id'] ?>"><?= $invoice['ref'] ?></a>
+
                 </td>
                 <td>
                     <?= round($invoice['total_ht'], 4) ?>
@@ -28,7 +29,7 @@
                     <?= round($invoice['total_ttc'], 4) ?>
                 </td>
                 <td>
-                    <?= $invoice['cond_reglement_doc'] ?>
+                    <?= $traductionReglement[$invoice['cond_reglement_doc']] ?? $invoice['cond_reglement_doc'] ?>
                 </td>
                 <td>
                     <?= $invoice['mode_reglement_code'] ?>
