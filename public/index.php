@@ -1,41 +1,40 @@
 <?php
+// Dans public/index.php
 
-require_once __DIR__ . "/../app/controleur/ControleurPrincipal.php";
-require_once __DIR__ . "/../app/modele/DolibarrAPI.php";
+// 1. On récupère et on découpe l'URL (ex: facture/voir/2)
+$url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 
-// Récupération de la route
-$route = $_GET['route'] ?? 'home';
 
-// Routing simple
+array_shift($url); // On enlève le premier segment (Dolibarrapp) si l'application n'est pas à la racine du serveur (en mode dev)
+
+// Le premier segment de l'URL détermine la route (ex: 'facture')
+$route = isset($url[0]) && $url[0] !== '' ? $url[0] : 'accueil';
+
+// 2. Le SWITCH pour associer l'URL au bon nom de Contrôleur
 switch ($route) {
-
     case 'facture':
-        require_once __DIR__ . "/../app/controleur/ControleurFacture.php";
-        $controller = new ControleurFacture();
-        $controller->index();
+        $nom_controleur = 'ControleurFacture';
         break;
 
-    case 'facture/liste':
-        require_once __DIR__ . "/../app/controleur/ControleurFacture.php";
-        $controller = new ControleurFacture();
-        $controller->liste();
-        break;
-
-    case 'depense':
-        require_once __DIR__ . "/../app/controleur/ControleurDepense.php";
-        $controller = new ControleurDepense();
-        $controller->index();
-        break;
-
-    case 'banque':
-        require_once __DIR__ . "/../app/controleur/ControleurBanque.php";
-        $controller = new ControleurBanque();
-        $controller->index();
-        break;
-
+    case 'accueil':
     case 'home':
+        $nom_controleur = 'ControleurPrincipal';
+        break;
+
     default:
-        $controller = new ControleurPrincipal();
-        $controller->index();
+        // Si l'URL n'existe pas, on renvoie vers l'accueil (ou un controleur 404)
+        $nom_controleur = 'ControleurPrincipal';
         break;
 }
+
+// 3. On inclut le fichier correspondant et on l'instancie
+require_once '../app/controleur/' . $nom_controleur . '.php';
+$mon_controleur = new $nom_controleur();
+
+// 4. On récupère l'action et l'ID dans la suite de l'URL
+$action = isset($url[1]) && $url[1] !== '' ? $url[1] : 'index'; // ex: 'voir'
+$id = isset($url[2]) ? $url[2] : null;                      // ex: '2'
+
+// 5. On appelle la méthode du contrôleur en lui passant l'ID
+$mon_controleur->$action($id);
+?>

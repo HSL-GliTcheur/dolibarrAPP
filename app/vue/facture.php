@@ -1,5 +1,18 @@
-<h1 class="text-center">Facture</h1>
+<div class="container mt-3">
+    <h1 class="">Facture</h1>
 
-<div class="container d-flex">
-    <a href="./facture/liste">Liste de toutes les factures</a>
+    <div class="mt-5 d-flex gap-5">
+        <div class="card" style="width: 18rem;">
+            <i class="bi bi-list-ul card-img-top text-center" style="font-size: 3rem;"></i>
+            <div class="card-body d-flex justify-content-center">
+                <a class="text-center" href="./facture/liste">Liste de toutes les factures</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <i class="bi bi-search card-img-top text-center" style="font-size: 3rem;"></i>
+            <div class="card-body d-flex justify-content-center">
+                <a class="text-center" href="./facture/voir">Visualiser une facture avec son ID</a>
+            </div>
+        </div>
+    </div>
 </div>

@@ -37,9 +37,14 @@ class DolibarrAPI
         return json_decode($response, true);
     }
 
-    public function getInvoices()
+    public function getInvoicesAll()
     {
         return $this->request("/invoices");
+    }
+
+    public function getInvoicesById($id)
+    {
+        return $this->request("/invoices/" . $id);
     }
 
     public function getExpenseReports()
