@@ -54,7 +54,12 @@ class DolibarrAPI
 
     public function getBankAccounts()
     {
-        return $this->request("/accounts");
+        return $this->request("/bankaccounts", "GET");
+    }
+
+    public function getBankAccountsById($id)
+    {
+        return $this->request("/bankaccounts/" . $id, "GET");
     }
 
     public function createBankAccount(array $data)
