@@ -12,7 +12,7 @@
         document.getElementById('numero').addEventListener('keypress', function (event) {
             var id = this.value;
             if (id && event.key === 'Enter') {
-                window.location.href = './voir/' + id;
+                window.location.href = './voirid/' + id;
             }
         });
     </script>

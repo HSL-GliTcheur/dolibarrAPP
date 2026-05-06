@@ -2,7 +2,7 @@
 
 <div class="container mt-4">
     <div class="card shadow">
-        <div class="card-header bg-warning text-dark">
+        <div class="card-header bg-primary text-white">
             <h3 class="mb-0">Modifier le compte : <?php echo htmlspecialchars($compte['label']); ?></h3>
         </div>
         <div class="card-body">
@@ -12,17 +12,17 @@
 
                 <div class="mb-3">
                     <label for="label" class="form-label">Nom du compte</label>
-                    <input type="text" name="label" id="label" class="form-control" 
-                           value="<?php echo htmlspecialchars($compte['label']); ?>" required>
+                    <input type="text" name="label" id="label" class="form-control"
+                        value="<?php echo htmlspecialchars($compte['label']); ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="bank" class="form-label">Nom de la banque</label>
-                    <input type="text" name="bank" id="bank" class="form-control" 
-                           value="<?php echo htmlspecialchars($compte['bank']); ?>" required>
+                    <input type="text" name="bank" id="bank" class="form-control"
+                        value="<?php echo htmlspecialchars($compte['bank']); ?>" required>
                 </div>
-                
-                <button type="submit" class="btn btn-warning">Enregistrer les modifications</button>
-                <a href="index.php?route=banque" class="btn btn-secondary">Annuler</a>
+
+                <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
+                <a href="/Dolibarrapp/banque" class="btn btn-secondary">Annuler</a>
             </form>
         </div>
     </div>

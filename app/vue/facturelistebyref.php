@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="d-flex align-items-center gap-2">
-        <h3><a href="../voirid"><i class="bi bi-arrow-left"></i></a></h3>
+        <h3><a href="../voirref"><i class="bi bi-arrow-left"></i></a></h3>
         <h1>Liste de la facture :
             <?= $invoice['ref'] ?>
         </h1>

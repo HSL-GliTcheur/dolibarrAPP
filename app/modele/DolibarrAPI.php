@@ -37,6 +37,10 @@ class DolibarrAPI
         return json_decode($response, true);
     }
 
+    // ------------------------
+    // ------------ Factures ------------
+    // ------------------------
+
     public function getInvoicesAll()
     {
         return $this->request("/invoices");
@@ -47,10 +51,23 @@ class DolibarrAPI
         return $this->request("/invoices/" . $id);
     }
 
+    public function getInvoicesByRef($ref)
+    {
+        return $this->request("/invoices/ref/" . $ref);
+    }
+
+    // ------------------------
+    // ------------ Dépense ------------
+    // ------------------------
+
     public function getExpenseReports()
     {
         return $this->request("/expensereports");
     }
+
+    // ------------------------
+    // ------------ Banque ------------
+    // ------------------------
 
     public function getBankAccounts()
     {

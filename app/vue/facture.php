@@ -11,7 +11,13 @@
         <div class="card" style="width: 18rem;">
             <i class="bi bi-search card-img-top text-center" style="font-size: 3rem;"></i>
             <div class="card-body d-flex justify-content-center">
-                <a class="text-center" href="./facture/voir">Visualiser une facture avec son ID</a>
+                <a class="text-center" href="./facture/voirid">Visualiser une facture avec son ID</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <i class="bi bi-search card-img-top text-center" style="font-size: 3rem;"></i>
+            <div class="card-body d-flex justify-content-center">
+                <a class="text-center" href="./facture/voirref">Visualiser une facture avec sa référence</a>
             </div>
         </div>
     </div>
