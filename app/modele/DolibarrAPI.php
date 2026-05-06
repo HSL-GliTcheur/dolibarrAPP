@@ -56,4 +56,19 @@ class DolibarrAPI
     {
         return $this->request("/accounts");
     }
+
+    public function createBankAccount(array $data)
+    {
+        return $this->request("/bankaccounts", "POST", $data);
+    }
+
+    public function updateBankAccount(int $id, array $data)
+    {
+        return $this->request("/bankaccounts/" . $id, "PUT", $data);
+    }
+
+    public function deleteBankAccount(int $id)
+    {
+        return $this->request("/bankaccounts/" . $id, "DELETE");
+    }
 }
