@@ -12,8 +12,17 @@ $route = isset($url[0]) && $url[0] !== '' ? $url[0] : 'accueil';
 
 // 2. Le SWITCH pour associer l'URL au bon nom de Contrôleur
 switch ($route) {
+
     case 'facture':
         $nom_controleur = 'ControleurFacture';
+        break;
+
+    case 'banque':
+        $nom_controleur = 'ControleurBanque';
+        break;
+
+    case 'depense':
+        $nom_controleur = 'ControleurDepense';
         break;
 
     case 'accueil':

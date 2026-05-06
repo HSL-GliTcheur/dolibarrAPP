@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -12,3 +12,25 @@
 </head>
 
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/Dolibarrapp/accueil">DolibarrAPP</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Dolibarrapp/accueil">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Dolibarrapp/banque/index">Banque</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Dolibarrapp/facture">Factures</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Dolibarrapp/depense/index">Dépenses</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
