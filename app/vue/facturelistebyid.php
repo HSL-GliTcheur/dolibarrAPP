@@ -17,6 +17,7 @@
                 <th scope="col">Condition de réglement</th>
                 <th scope="col">Mode de payement</th>
                 <th scope="col">Status</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -57,6 +58,9 @@
                             echo 'Inconnu';
                             break;
                     } ?>
+                </td>
+                <td>
+                    <a href="/Dolibarr/facture/modifier/<?= $invoice['id'] ?>" class="btn btn-success">Modifier</a>
                 </td>
             </tr>
             <?php //endforeach; ?>
