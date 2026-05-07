@@ -38,6 +38,16 @@ class DolibarrAPI
     }
 
     // ------------------------
+    // ------------ Tiers (Thirdparties) ------------
+    // ------------------------
+
+    // NOUVEAU : Récupérer la liste des Tiers
+    public function getTiers()
+    {
+        return $this->request("/thirdparties");
+    }
+
+    // ------------------------
     // ------------ Factures ------------
     // ------------------------
 
@@ -53,7 +63,18 @@ class DolibarrAPI
 
     public function getInvoicesByRef($ref)
     {
+        // $urlRef = urlencode($ref);
         return $this->request("/invoices/ref/" . $ref);
+    }
+
+    public function createInvoice(array $data)
+    {
+        return $this->request("/invoices", "POST", $data);
+    }
+
+    public function deleteInvoice(int $id)
+    {
+        return $this->request("/invoices/" . $id, "DELETE");
     }
 
     // ------------------------

@@ -49,12 +49,7 @@ class ControleurFacture
 
             $id = intval($id);
 
-
-
             $invoice = $this->api->getInvoicesById($id);
-
-
-
 
 
             $traductionReglement = [
@@ -94,14 +89,7 @@ class ControleurFacture
     {
         if ($ref) {
 
-            $ref = intval($ref);
-
-
-
             $invoice = $this->api->getInvoicesByRef($ref);
-
-
-
 
 
             $traductionReglement = [
@@ -134,6 +122,64 @@ class ControleurFacture
             require_once __DIR__ . "/../vue/base/entete.php";
             include __DIR__ . "/../vue/facturechercheref.php";
             require_once __DIR__ . "/../vue/base/pied.php";
+        }
+    }
+
+    public function ajouter()
+    {
+        $tiers = $this->api->getTiers();
+        require_once __DIR__ . "/../vue/base/entete.php";
+        include __DIR__ . "/../vue/facturecreer.php";
+        require_once __DIR__ . "/../vue/base/pied.php";
+    }
+
+
+    public function store()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Dans Dolibarr, l'ID du tiers (socid) est obligatoire pour créer une facture.
+            $data = [
+                'socid' => $_POST['socid'],
+                'type' => $_POST['type'] ?? 0, // 0 = Facture standard
+                'date' => time() // Date actuelle (timestamp Unix)
+            ];
+
+            $result = $this->api->createInvoice($data);
+
+            if ($result && !isset($result['error'])) {
+                // Redirection vers la liste des factures en cas de succès
+                header("Location: /Dolibarrapp/facture/liste");
+                exit();
+            } else {
+                $errorMessage = "Erreur lors de la création de la facture.";
+
+                if (isset($result['error'][0]) && strpos($result['error'][0], 'fk_facture_fk_soc') !== false) {
+                    $errorMessage = "L'ID du Client (socid) sélectionné n'existe pas ou est invalide.";
+                } elseif (isset($result['error']['message'])) {
+                    $errorMessage = $result['error']['message'];
+                }
+
+                echo "<div class='container mt-5'>
+                        <div class='alert alert-danger'>
+                            <h4 class='alert-heading'>Impossible de créer la facture</h4>
+                            <p>" . htmlspecialchars($errorMessage) . "</p>
+                            <hr>
+                            <p class='mb-0 small'>Détail technique : " . htmlspecialchars($result['error'][0] ?? '') . "</p>
+                        </div>
+                        <a href='/Dolibarrapp/facture/ajouter' class='btn btn-primary'>Retour au formulaire</a>
+                      </div>";
+            }
+        }
+    }
+
+
+    public function supprimer($id)
+    {
+        if ($id) {
+            $result = $this->api->deleteInvoice($id);
+            // Redirection après suppression
+            header("Location: /Dolibarrapp/facture/liste");
+            exit();
         }
     }
 }
