@@ -6,8 +6,15 @@
                 <?= htmlspecialchars($unTiers['name']) ?>
             </h1>
         </div>
-        <a href="/Dolibarrapp/tiers/modifier/<?= $unTiers['id'] ?>" class="btn btn-warning"><i class="bi bi-pencil"></i>
-            Modifier</a>
+        <div class="d-flex gap-2">
+            <a href="/Dolibarrapp/tiers/modifier/<?= $unTiers['id'] ?>" class="btn btn-warning"><i
+                    class="bi bi-pencil"></i>
+                Modifier</a>
+            <a onclick="return confirm('Voulez-vous supprimer ce tiers ?') ;"
+                href="/Dolibarrapp/tiers/supprimer/<?= $unTiers['id'] ?>" class="btn btn-danger"><i
+                    class="bi bi-trash"></i>
+                Supprimer</a>
+        </div>
     </div>
 
     <ul class="list-group mt-5 w-50">

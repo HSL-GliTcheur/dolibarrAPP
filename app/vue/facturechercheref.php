@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="d-flex align-items-center gap-2">
-        <h3><a href="../facture"><i class="bi bi-arrow-left"></i></a></h3>
+        <h3><a href="/Dolibarrapp/facture"><i class="bi bi-arrow-left"></i></a></h3>
         <h1>Entrez la référence d'une facture pour la visualiser</h1>
     </div>
 

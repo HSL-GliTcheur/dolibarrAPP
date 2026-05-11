@@ -5,25 +5,25 @@
         <div class="card" style="width: 18rem;">
             <i class="bi bi-people card-img-top text-center" style="font-size: 3rem;"></i>
             <div class="card-body d-flex justify-content-center">
-                <a class="text-center" href="./tiers/liste">Liste de tous les tiers</a>
+                <a class="text-center" href="/Dolibarrapp/tiers/liste">Liste de tous les tiers</a>
             </div>
         </div>
         <div class="card" style="width: 18rem;">
             <i class="bi bi-person-plus card-img-top text-center" style="font-size: 3rem;"></i>
             <div class="card-body d-flex justify-content-center">
-                <a class="text-center" href="./tiers/ajouter">Créer un nouveau tiers</a>
+                <a class="text-center" href="/Dolibarrapp/tiers/ajouter">Créer un nouveau tiers</a>
             </div>
         </div>
         <div class="card" style="width: 18rem;">
             <i class="bi bi-search card-img-top text-center" style="font-size: 3rem;"></i>
             <div class="card-body d-flex justify-content-center">
-                <a class="text-center" href="./tiers/voirid">Chercher un tiers par ID</a>
+                <a class="text-center" href="/Dolibarrapp/tiers/voirid">Chercher un tiers par ID</a>
             </div>
         </div>
         <div class="card" style="width: 18rem;">
             <i class="bi bi-search card-img-top text-center" style="font-size: 3rem;"></i>
             <div class="card-body d-flex justify-content-center">
-                <a class="text-center" href="./tiers/voirnom">Chercher un tiers par Nom</a>
+                <a class="text-center" href="/Dolibarrapp/tiers/voirnom">Chercher un tiers par Nom</a>
             </div>
         </div>
     </div>

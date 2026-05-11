@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="d-flex align-items-center justify-content-between mb-4">
         <div class="d-flex align-items-center gap-2">
-            <h3><a href="../facture"><i class="bi bi-arrow-left"></i></a></h3>
+            <h3><a href="/Dolibarrapp/facture"><i class="bi bi-arrow-left"></i></a></h3>
             <h1 class="mb-0">Liste des factures</h1>
         </div>
         <a href="/Dolibarrapp/facture/ajouter" class="btn btn-success">
@@ -29,7 +29,7 @@
                             <?= $invoice['id'] ?>
                         </td>
                         <td>
-                            <a href="./voirid/<?= $invoice['id'] ?>"><?= $invoice['ref'] ?></a>
+                            <a href="/Dolibarrapp/facture/voirid/<?= $invoice['id'] ?>"><?= $invoice['ref'] ?></a>
                         </td>
                         <td>
                             <?= round($invoice['total_ht'], 2) ?> €
@@ -59,10 +59,9 @@
                         </td>
                         <td>
                             <!-- BOUTON DE SUPPRESSION -->
-                            <a href="/Dolibarrapp/facture/supprimer/<?= $invoice['id'] ?>" 
-                               class="btn btn-sm btn-outline-danger" 
-                               onclick="return confirm('Attention: Voulez-vous vraiment supprimer la facture <?= $invoice['ref'] ?> ?');">
-                               <i class="bi bi-trash"></i>
+                            <a href="/Dolibarrapp/facture/supprimer/<?= $invoice['id'] ?>" class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Attention: Voulez-vous vraiment supprimer la facture <?= $invoice['ref'] ?> ?');">
+                                <i class="bi bi-trash"></i>
                             </a>
                         </td>
                     </tr>

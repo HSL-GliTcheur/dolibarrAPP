@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <div class="d-flex align-items-center gap-2 justify-content-between">
         <div class="d-flex align-items-center gap-2">
-            <h3><a href="../voirref"><i class="bi bi-arrow-left"></i></a></h3>
+            <h3><a href="/Dolibarrapp/facture/voirref"><i class="bi bi-arrow-left"></i></a></h3>
             <h1>Détails de la facture : <?= htmlspecialchars($invoice['ref']) ?></h1>
         </div>
         <a href="/Dolibarrapp/facture/modifier/<?= $invoice['id'] ?>" class="btn btn-warning text-dark fw-bold">

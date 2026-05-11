@@ -23,23 +23,24 @@
                 <?php foreach ($lesTiers as $t): ?>
                     <tr>
                         <td><?= $t['id'] ?></td>
-                        <td><a href="./voirid/<?= $t['id'] ?>"><?= htmlspecialchars($t['name']) ?></a></td>
-                        <td>
-                            <?php
-                            if ($t['client'] == 1)
-                                echo "Client";
-                            elseif ($t['client'] == 2)
-                                echo "Prospect";
-                            elseif ($t['client'] == 3)
-                                echo "Client & Prospect";
-                            else
-                                echo "Autre";
-                            ?>
-                        </td>
-                        <td><?= htmlspecialchars($t['email'] ?? '-') ?></td>
-                        <td><?= htmlspecialchars($t['phone'] ?? '-') ?></td>
-                        <td>
-                            <a href="/Dolibarrapp/tiers/supprimer/<?= $t['id'] ?>" class="btn btn-sm btn-outline-danger"
+                        <td><a href="/Dolibarrapp/tiers/voirid/<?= $t['id'] ?>"><?= htmlspecialchars($t['name']) ?></a></td>
+                                <td>
+                                    <?php
+                                    if ($t['client'] == 1)
+                                        echo "Client";
+                                    elseif ($t['client'] == 2)
+                                        echo "Prospect";
+                                    elseif ($t['client'] == 3)
+                                        echo "Client & Prospect";
+                                    else
+                                        echo "Autre";
+                                    ?>
+                                </td>
+                                <td><?= htmlspecialchars($t['email'] ?? '-') ?></td>
+                                <td><?= htmlspecialchars($t['phone'] ?? '-') ?></td>
+                                <td>
+                                    <a href=" /Dolibarrapp/tiers/supprimer/<?= $t['id'] ?>"
+                                class="btn btn-sm btn-outline-danger"
                                 onclick="return confirm('Voulez-vous supprimer ce tiers ?');"><i class="bi bi-trash"></i></a>
                         </td>
                     </tr>

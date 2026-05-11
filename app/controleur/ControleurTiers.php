@@ -35,7 +35,7 @@ class ControleurTiers
             $unTiers = $this->api->getTiersById(intval($id));
             require_once __DIR__ . "/../vue/Base/entete.php";
             if (!$unTiers || isset($unTiers['error'])) {
-                echo '<div class="container mt-5"><h1>Tiers introuvable.</h1><a href="../voirid" class="btn btn-primary">Retour</a></div>';
+                echo '<div class="container mt-5"><h1>Tiers introuvable.</h1><a href="/Dolibarrapp/tiers/voirid" class="btn btn-primary">Retour</a></div>';
             } else {
                 include __DIR__ . "/../vue/tierslistebyid.php";
             }
@@ -95,7 +95,9 @@ class ControleurTiers
                 'country_id' => !empty($_POST['pays']) ? intval($_POST['pays']) : '',
                 'state_id' => !empty($_POST['departement']) ? intval($_POST['departement']) : '',
                 'phone' => $_POST['telephone'] ?? '',
-                'email' => $_POST['email'] ?? ''
+                'email' => $_POST['email'] ?? '',
+                'code_client' => '-1',
+                'code_fournisseur' => '-1'
             ];
 
             $resultat = $this->api->createTiers($donnees);
@@ -104,7 +106,7 @@ class ControleurTiers
                 header("Location: /Dolibarrapp/tiers/liste");
                 exit();
             } else {
-                echo "<div class='container mt-5 alert alert-danger'>Erreur lors de la création du Tiers.</div>";
+                echo "<div class='container mt-5 alert alert-danger'>Erreur lors de la création du Tiers.</div>" . $resultat['error'] ? json_encode($resultat['error']) : '';
             }
         }
     }

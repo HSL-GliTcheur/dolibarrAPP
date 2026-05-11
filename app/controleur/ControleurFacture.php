@@ -84,7 +84,7 @@ class ControleurFacture
             if (!$invoice || isset($invoice['error'])) {
                 echo '<div class="container mt-5">
     <h1>Facture introuvable veuillez rechercher une autre facture</h1>
-    <a href="../voirid" class="btn btn-primary">Retour</a>
+    <a href="/Dolibarrapp/facture/voirid" class="btn btn-primary">Retour</a>
 </div>';
             } else {
                 include __DIR__ . "/../vue/facturelistebyid.php";
@@ -124,7 +124,7 @@ class ControleurFacture
             if (!$invoice || isset($invoice['error'])) {
                 echo '<div class="container mt-5">
     <h1>Facture introuvable veuillez rechercher une autre facture</h1>
-    <a href="../voirref" class="btn btn-primary">Retour</a>
+    <a href="/Dolibarrapp/facture/voirref" class="btn btn-primary">Retour</a>
 </div>';
             } else {
                 include __DIR__ . "/../vue/facturelistebyref.php";
