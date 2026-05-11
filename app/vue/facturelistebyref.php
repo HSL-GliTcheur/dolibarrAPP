@@ -1,13 +1,16 @@
 <div class="container mt-5">
-    <div class="d-flex align-items-center gap-2">
-        <h3><a href="../voirref"><i class="bi bi-arrow-left"></i></a></h3>
-        <h1>Liste de la facture :
-            <?= $invoice['ref'] ?>
-        </h1>
+    <div class="d-flex align-items-center gap-2 justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+            <h3><a href="../voirref"><i class="bi bi-arrow-left"></i></a></h3>
+            <h1>Détails de la facture : <?= htmlspecialchars($invoice['ref']) ?></h1>
+        </div>
+        <a href="/Dolibarrapp/facture/modifier/<?= $invoice['id'] ?>" class="btn btn-warning text-dark fw-bold">
+            <i class="bi bi-pencil-square"></i> Modifier la facture
+        </a>
     </div>
 
 
-    <table class="table">
+    <table class="table mt-5">
         <thead>
             <tr>
                 <th scope="col">ID</th>

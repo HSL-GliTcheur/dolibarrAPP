@@ -11,12 +11,20 @@ class ControleurFacture
         $this->api = new DolibarrAPI();
     }
 
+    // ==========================================
+    // Methodes pour la page d'accueil
+    // ==========================================
+
     public function index()
     {
         require_once __DIR__ . "/../vue/base/entete.php";
         include __DIR__ . "/../vue/facture.php";
         require_once __DIR__ . "/../vue/base/pied.php";
     }
+
+    // ==========================================
+    // Methodes pour la liste de toutes les factures
+    // ==========================================
 
     public function liste()
     {
@@ -42,6 +50,10 @@ class ControleurFacture
         include __DIR__ . "/../vue/factureliste.php";
         require_once __DIR__ . "/../vue/base/pied.php";
     }
+
+    // ==========================================
+    // Methodes pour la recherche
+    // ==========================================
 
     public function voirid($id)
     {
@@ -125,6 +137,10 @@ class ControleurFacture
         }
     }
 
+    // ==========================================
+    // Methodes pour la création
+    // ==========================================
+
     public function ajouter()
     {
         $tiers = $this->api->getTiers();
@@ -172,6 +188,10 @@ class ControleurFacture
         }
     }
 
+    // ==========================================
+    // Methodes pour la suppression
+    // ==========================================
+
 
     public function supprimer($id)
     {
@@ -181,6 +201,90 @@ class ControleurFacture
             header("Location: /Dolibarrapp/facture/liste");
             exit();
         }
+    }
+
+    // ==========================================
+    // Methodes pour la modifiaction
+    // ==========================================
+
+    public function modifier($id)
+    {
+        if ($id) {
+            $invoice = $this->api->getInvoicesById($id);
+
+            if (!$invoice || isset($invoice['error'])) {
+                die("Facture introuvable.");
+            }
+
+            // Récupération des dictionnaires pour les listes déroulantes
+            $paymentConditions = $this->api->getPaymentConditions();
+            $paymentTypes = $this->api->getPaymentTypes();
+
+            require_once __DIR__ . "/../vue/base/entete.php";
+            include __DIR__ . "/../vue/facturemodifier.php";
+            require_once __DIR__ . "/../vue/base/pied.php";
+        }
+    }
+
+    public function updateGeneral($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
+            $data = [
+                'cond_reglement_id' => $_POST['cond_reglement_id'],
+                'mode_reglement_id' => $_POST['mode_reglement_id']
+            ];
+
+            $this->api->updateInvoice($id, $data);
+            header("Location: /Dolibarrapp/facture/modifier/" . $id);
+            exit();
+        }
+    }
+
+    public function changerStatut($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
+            $action = $_POST['action_statut']; // 'valider' ou 'brouillon'
+
+            if ($action === 'valider') {
+                $this->api->validateInvoice($id);
+            } elseif ($action === 'brouillon') {
+                $this->api->setDraftInvoice($id);
+            }
+
+            header("Location: /Dolibarrapp/facture/modifier/" . $id);
+            exit();
+        }
+    }
+
+    public function ajouterLigne($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
+            $data = [
+                'desc' => $_POST['desc'],
+                'subprice' => $_POST['subprice'], // Prix unitaire HT
+                'qty' => $_POST['qty'],
+                'tva_tx' => $_POST['tva_tx'], // Taux de TVA (ex: 20)
+                'product_type' => $_POST['product_type'] // <-- NOUVEAU : 0 (Produit) ou 1 (Service)
+            ];
+
+            $result = $this->api->addInvoiceLine($id, $data);
+
+            header("Location: /Dolibarrapp/facture/modifier/" . $id);
+            exit();
+        }
+    }
+
+    public function supprimerLigne($id)
+    {
+        // L'ID dans l'URL est l'ID de la facture, l'ID de la ligne est envoyé en POST par la modale
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id && isset($_POST['lineid'])) {
+            $lineId = intval($_POST['lineid']);
+            $this->api->deleteInvoiceLine($id, $lineId);
+        }
+
+        // Redirection vers la page de modification de la facture pour recharger les données
+        header("Location: /Dolibarrapp/facture/modifier/" . $id);
+        exit();
     }
 }
 

@@ -38,6 +38,23 @@ class DolibarrAPI
     }
 
     // ------------------------
+    // ------------ Appels pour affichage ------------
+    // ------------------------
+
+    // ------------------------
+    // ------------ Dictionnaires ------------
+    // ------------------------
+    public function getPaymentConditions()
+    {
+        return $this->request("/setup/dictionary/payment_terms");
+    }
+
+    public function getPaymentTypes()
+    {
+        return $this->request("/setup/dictionary/payment_types");
+    }
+
+    // ------------------------
     // ------------ Tiers (Thirdparties) ------------
     // ------------------------
 
@@ -46,6 +63,13 @@ class DolibarrAPI
     {
         return $this->request("/thirdparties");
     }
+
+
+
+    // ------------------------
+    // ------------ Appels normaux ------------
+    // ------------------------
+
 
     // ------------------------
     // ------------ Factures ------------
@@ -72,9 +96,36 @@ class DolibarrAPI
         return $this->request("/invoices", "POST", $data);
     }
 
+    public function updateInvoice($id, array $data)
+    {
+        return $this->request("/invoices/" . $id, "PUT", $data);
+    }
+
     public function deleteInvoice(int $id)
     {
         return $this->request("/invoices/" . $id, "DELETE");
+    }
+
+    public function validateInvoice($id)
+    {
+        // La validation nécessite parfois d'indiquer un entrepôt, 0 par défaut
+        return $this->request("/invoices/" . $id . "/validate", "POST", ["idwarehouse" => 0, "notrigger" => 0]);
+    }
+
+    public function setDraftInvoice($id)
+    {
+        return $this->request("/invoices/" . $id . "/settodraft", "POST", ["idwarehouse" => 0]);
+    }
+
+    public function addInvoiceLine($id, array $data)
+    {
+        return $this->request("/invoices/" . $id . "/lines", "POST", $data);
+    }
+
+    public function deleteInvoiceLine($id, $lineId)
+    {
+        // Endpoint Dolibarr : DELETE /invoices/{id}/lines/{lineid}
+        return $this->request("/invoices/" . $id . "/lines/" . $lineId, "DELETE");
     }
 
     // ------------------------
