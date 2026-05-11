@@ -16,10 +16,18 @@
         </div>
     </div>
 
+
+
     <div class="row g-4">
+
         <!-- COLONNE GAUCHE : INFOS GENERALES ET ACTIONS SUR LE STATUT -->
+
         <div class="col-md-5">
+
+            <!-- ------------------------ -->
             <!-- Formulaire Condition & Mode de règlement -->
+            <!-- ------------------------ -->
+
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">Informations de règlement</h5>
@@ -34,7 +42,7 @@
                                 <?php if (isset($paymentConditions) && is_array($paymentConditions)): ?>
                                     <?php foreach ($paymentConditions as $cond): ?>
                                         <option value="<?= $cond['id'] ?>" <?= ($invoice['cond_reglement_id'] == $cond['id']) ? 'selected' : '' ?>>
-                                            <?= htmlspecialchars($cond['label']) ?>
+                                            <?= htmlspecialchars($traductionCReglement[$cond['label']] ?? $cond['label']) ?>
                                         </option>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
@@ -48,7 +56,7 @@
                                 <?php if (isset($paymentTypes) && is_array($paymentTypes)): ?>
                                     <?php foreach ($paymentTypes as $type): ?>
                                         <option value="<?= $type['id'] ?>" <?= ($invoice['mode_reglement_id'] == $type['id']) ? 'selected' : '' ?>>
-                                            <?= htmlspecialchars($type['label']) ?>
+                                            <?= htmlspecialchars($traductionMReglement[$type['label']] ?? $type['label']) ?>
                                         </option>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
@@ -61,7 +69,10 @@
                 </div>
             </div>
 
+            <!-- ------------------------ -->
             <!-- Actions sur le statut -->
+            <!-- ------------------------ -->
+
             <div class="card shadow-sm">
                 <div class="card-header bg-dark text-white">
                     <h5 class="mb-0">Actions sur le statut</h5>
@@ -96,7 +107,10 @@
             </div>
         </div>
 
+        <!-- ------------------------ -->
         <!-- COLONNE DROITE : LIGNES DE FACTURE -->
+        <!-- ------------------------ -->
+
         <div class="col-md-7">
 
             <?php if ($invoice['status'] == 0): ?>
@@ -260,5 +274,3 @@
         </div>
     </div>
 </div>
-
-<!-- </div> -->

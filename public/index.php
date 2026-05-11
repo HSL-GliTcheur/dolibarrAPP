@@ -17,6 +17,10 @@ switch ($route) {
         $nom_controleur = 'ControleurFacture';
         break;
 
+    case 'tiers':
+        $nom_controleur = 'ControleurTiers';
+        break;
+
     case 'banque':
         $nom_controleur = 'ControleurBanque';
         break;

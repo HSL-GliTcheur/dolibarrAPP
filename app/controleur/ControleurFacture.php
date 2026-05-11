@@ -220,6 +220,31 @@ class ControleurFacture
             $paymentConditions = $this->api->getPaymentConditions();
             $paymentTypes = $this->api->getPaymentTypes();
 
+            // AJOUT DU TABLEAU DE TRADUCTION ICI
+            $traductionCReglement = [
+                "Due upon receipt" => "À la réception",
+                "Due on order" => "À la commande",
+                "Due on delivery" => "À la livraison",
+                "50 and 50" => "50% à la commande, 50% à la livraison",
+                "10 days" => "10 jours",
+                "10 days end of month" => "10 jours fin de mois",
+                "14 days" => "14 jours",
+                "14 days end of month" => "14 jours fin de mois",
+                "30 days" => "30 jours",
+                "30 days end of month" => "30 jours fin de mois",
+                "45 days" => "45 jours",
+                "45 days end of month" => "45 jours fin de mois",
+                "60 days" => "60 jours",
+            ];
+
+            $traductionMReglement = [
+                "Credit card" => "Carte de crédit",
+                "Cheque" => "Chèque",
+                "Cash" => "Espèces",
+                "Direct Debit" => "Prélèvement automatique",
+                "Credit Transfer" => "Virement bancaire",
+            ];
+
             require_once __DIR__ . "/../vue/base/entete.php";
             include __DIR__ . "/../vue/facturemodifier.php";
             require_once __DIR__ . "/../vue/base/pied.php";
