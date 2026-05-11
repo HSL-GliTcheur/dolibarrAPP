@@ -165,4 +165,35 @@ class DolibarrAPI
     {
         return $this->request("/bankaccounts/" . $id, "DELETE");
     }
+
+
+    // ------------------------
+    // ------------ Tiers ------------
+    // ------------------------
+
+
+    // Récupérer un Tiers par son ID
+    public function getTiersById($id)
+    {
+        return $this->request("/thirdparties/" . $id);
+    }
+
+    // Créer un Tiers
+    public function createTiers(array $donnees)
+    {
+        return $this->request("/thirdparties", "POST", $donnees);
+    }
+
+    // Modifier un Tiers
+    public function updateTiers($id, array $donnees)
+    {
+        return $this->request("/thirdparties/" . $id, "PUT", $donnees);
+    }
+
+    // Supprimer un Tiers
+    public function deleteTiers(int $id)
+    {
+        return $this->request("/thirdparties/" . $id, "DELETE");
+    }
+
 }

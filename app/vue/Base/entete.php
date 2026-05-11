@@ -22,7 +22,7 @@
                         <a class="nav-link" href="/Dolibarrapp/accueil">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Dolibarrapp/tiers/index">Tiers</a>
+                        <a class="nav-link" href="/Dolibarrapp/tiers">Tiers</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Dolibarrapp/banque/index">Banque</a>
