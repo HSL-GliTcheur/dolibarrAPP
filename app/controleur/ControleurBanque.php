@@ -11,96 +11,147 @@ class ControleurBanque
         $this->api = new DolibarrAPI();
     }
 
-    // URL: /banque/index ou /banque/
+    // Page d'accueil Banque (Dashboard d'actions)
+    // URL: /banque/index ou /banque
     public function index()
     {
-        $title = "Mes Comptes";
-        // On demande explicitement plus de résultats à l'API
-        $comptes = $this->api->getBankAccounts();
-
-        // LIGNE DE TEST : Affiche tout le contenu brut reçu de l'API
-        // echo "<pre>"; var_dump($comptes); echo "</pre>"; die();
-
-        require_once __DIR__ . "/../vue/base/entete.php";
-        require_once __DIR__ . "/../vue/Banque.php";
-        require_once __DIR__ . "/../vue/base/pied.php";
+        require_once __DIR__ . "/../vue/Base/entete.php";
+        include __DIR__ . "/../vue/banque.php";
+        require_once __DIR__ . "/../vue/Base/pied.php";
     }
 
-    // URL: /banque/ajouter
+    // Liste complète de tous les comptes bancaires
+    public function liste()
+    {
+        $lesComptes = $this->api->getBankAccounts();
+        require_once __DIR__ . "/../vue/Base/entete.php";
+        include __DIR__ . "/../vue/banqueliste.php";
+        require_once __DIR__ . "/../vue/Base/pied.php";
+    }
+
+    // Visualiser un compte par son ID (ou afficher le formulaire de recherche)
+    public function voirid($id = null)
+    {
+        if ($id) {
+            $unCompte = $this->api->getBankAccountsById(intval($id));
+            require_once __DIR__ . "/../vue/Base/entete.php";
+            if (!$unCompte || isset($unCompte['error'])) {
+                echo '<div class="container mt-5"><h1>Compte bancaire introuvable.</h1><a href="/Dolibarrapp/banque/voirid" class="btn btn-primary">Retour</a></div>';
+            } else {
+                include __DIR__ . "/../vue/banquelistebyid.php";
+            }
+            require_once __DIR__ . "/../vue/Base/pied.php";
+        } else {
+            require_once __DIR__ . "/../vue/Base/entete.php";
+            include __DIR__ . "/../vue/banquechercheid.php";
+            require_once __DIR__ . "/../vue/Base/pied.php";
+        }
+    }
+
+    // Rechercher et lister des comptes par nom/libellé
+    public function voirnom($nom = null)
+    {
+        if ($nom) {
+            $nomDecode = urldecode($nom);
+            $tousLesComptes = $this->api->getBankAccounts();
+            $comptesTrouves = [];
+
+            if (!empty($tousLesComptes) && !isset($tousLesComptes['error'])) {
+                foreach ($tousLesComptes as $compte) {
+                    if (stripos($compte['label'], $nomDecode) !== false || stripos($compte['bank'], $nomDecode) !== false) {
+                        $comptesTrouves[] = $compte;
+                    }
+                }
+            }
+
+            require_once __DIR__ . "/../vue/Base/entete.php";
+            include __DIR__ . "/../vue/banquelistebynom.php";
+            require_once __DIR__ . "/../vue/Base/pied.php";
+        } else {
+            require_once __DIR__ . "/../vue/Base/entete.php";
+            include __DIR__ . "/../vue/banquecherchenom.php";
+            require_once __DIR__ . "/../vue/Base/pied.php";
+        }
+    }
+
+    // Formulaire d'ajout d'un compte bancaire
     public function ajouter()
     {
-        $title = "Ajouter un compte";
-        require_once __DIR__ . "/../vue/base/entete.php";
-        include __DIR__ . "/../vue/CreerBanque.php";
-        require_once __DIR__ . "/../vue/base/pied.php";
+        require_once __DIR__ . "/../vue/Base/entete.php";
+        include __DIR__ . "/../vue/banquecreer.php";
+        require_once __DIR__ . "/../vue/Base/pied.php";
     }
 
-    // URL: /banque/store (Appelé par le formulaire de création)
+    // Enregistrer un nouveau compte bancaire via l'API
     public function store($id = null)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // On prépare un tableau complet pour Dolibarr
-            $label = $_POST['label'];
-            // On crée une ref courte (max 12 caractères) et sans espaces
-            $ref = strtoupper(substr(str_replace(' ', '', $label), 0, 8)) . rand(1000, 9999);
+            $libelle = $_POST['label'];
+            $reference = strtoupper(substr(str_replace(' ', '', $libelle), 0, 8)) . rand(1000, 9999);
 
-            $data = [
-                'ref' => $ref,   // Ex: "MONCOMPTEBAN" au lieu de "Mon compte bancaire trop long"
-                'label' => $label, // Le label peut rester long
+            // Tableau complet envoyé à Dolibarr avec les nouveaux champs exhaustifs
+            $donnees = [
+                'ref' => $reference,
+                'label' => $libelle,
                 'bank' => $_POST['bank'],
-                'type' => $_POST['type'],
+                'type' => $_POST['type_compte'],
+                'number' => $_POST['numero_compte'] ?? '',
+                'iban' => $_POST['iban'] ?? '',
+                'bic' => $_POST['bic'] ?? '',
+                'currency_code' => $_POST['devise'] ?? 'EUR',
                 'clos' => "0",
                 'status' => "1",
-                'currency_code' => 'EUR',
                 'country_id' => "1"
             ];
 
-            $result = $this->api->createBankAccount($data);
+            $resultat = $this->api->createBankAccount($donnees);
 
-            // Debug : si ça échoue encore, on veut voir le message exact de Dolibarr
-            if ($result && !isset($result['error'])) {
-                header("Location: /Dolibarrapp/banque/index");
+            if ($resultat && !isset($resultat['error'])) {
+                header("Location: /Dolibarrapp/banque/liste");
                 exit();
             } else {
-                echo "<h3>Erreur lors de la création</h3>";
-                echo "<pre>";
-                print_r($result); // Cela affichera le détail de l'erreur (ex: champ manquant)
-                echo "</pre>";
-                echo "<a href='/Dolibarrapp/banque/ajouter'>Retour au formulaire</a>";
+                require_once __DIR__ . "/../vue/Base/entete.php";
+                echo "<div class='container mt-5 alert alert-danger'><h3>Erreur lors de la création</h3><pre>" . print_r($resultat, true) . "</pre><a href='/Dolibarrapp/banque/ajouter'>Retour</a></div>";
+                require_once __DIR__ . "/../vue/Base/pied.php";
             }
         }
     }
-    // URL: /banque/modifier/2 (Le $id est passé automatiquement par le routeur)
+
+    // Formulaire de modification d'un compte bancaire
     public function modifier($id)
     {
         if ($id) {
-            $compte = $this->api->getBankAccountsById($id);
+            $unCompte = $this->api->getBankAccountsById($id);
 
-            if ($compte && !isset($compte['error'])) {
-                $title = "Modifier le compte";
-                require_once __DIR__ . "/../vue/base/entete.php";
-                include __DIR__ . "/../vue/ModifierBanque.php";
-                require_once __DIR__ . "/../vue/base/pied.php";
+            if ($unCompte && !isset($unCompte['error'])) {
+                require_once __DIR__ . "/../vue/Base/entete.php";
+                include __DIR__ . "/../vue/banquemodifier.php";
+                require_once __DIR__ . "/../vue/Base/pied.php";
             } else {
                 die("Compte introuvable.");
             }
         }
     }
 
-    // URL: /banque/update (Appelé par le formulaire de modif)
+    // Mettre à jour le compte bancaire
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'];
-            $data = [
+            $donnees = [
                 'label' => $_POST['label'],
-                'bank' => $_POST['bank']
+                'bank' => $_POST['bank'],
+                'type' => $_POST['type_compte'],
+                'number' => $_POST['numero_compte'] ?? '',
+                'iban' => $_POST['iban'] ?? '',
+                'bic' => $_POST['bic'] ?? '',
+                'currency_code' => $_POST['devise'] ?? 'EUR'
             ];
 
-            $result = $this->api->updateBankAccount($id, $data);
+            $resultat = $this->api->updateBankAccount($id, $donnees);
 
-            if ($result && !isset($result['error'])) {
-                header("Location: /Dolibarrapp/banque/index");
+            if ($resultat && !isset($resultat['error'])) {
+                header("Location: /Dolibarrapp/banque/voirid/" . $id);
                 exit();
             } else {
                 die("Erreur lors de la modification.");
@@ -108,13 +159,12 @@ class ControleurBanque
         }
     }
 
-    // URL: /banque/supprimer/2
+    // Supprimer un compte bancaire
     public function supprimer($id)
     {
         if ($id) {
-            $result = $this->api->deleteBankAccount($id);
-            // Redirection vers la nouvelle route
-            header("Location: /Dolibarrapp/banque/index");
+            $this->api->deleteBankAccount($id);
+            header("Location: /Dolibarrapp/banque/liste");
             exit();
         }
     }
