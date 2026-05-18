@@ -4,9 +4,15 @@
             <h3><a href="/Dolibarrapp/facture/voirid"><i class="bi bi-arrow-left"></i></a></h3>
             <h1>Détails de la facture : <?= htmlspecialchars($invoice['ref']) ?></h1>
         </div>
-        <a href="/Dolibarrapp/facture/modifier/<?= $invoice['id'] ?>" class="btn btn-warning text-dark fw-bold">
-            <i class="bi bi-pencil-square"></i> Modifier la facture
-        </a>
+        <div class="d-flex gap-2">
+            <a href="/Dolibarrapp/facture/modifier/<?= $invoice['id'] ?>" class="btn btn-warning text-dark fw-bold">
+                <i class="bi bi-pencil-square"></i> Modifier la facture
+            </a>
+            <a onclick="return confirm('Voulez vous vraiment supprimer cette facture');"
+                href="/Dolibarrapp/facture/supprimer/<?= $invoice['id'] ?>" class="btn btn-danger text-dark fw-bold">
+                <i class="bi bi-trash"></i> Supprimer la facture
+            </a>
+        </div>
     </div>
 
 

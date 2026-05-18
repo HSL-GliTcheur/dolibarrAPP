@@ -164,7 +164,7 @@ class ControleurFacture
 
             if ($result && !isset($result['error'])) {
                 // Redirection vers la liste des factures en cas de succès
-                header("Location: /Dolibarrapp/facture/liste");
+                header("Location: /Dolibarrapp/facture/modifier/" . $result);
                 exit();
             } else {
                 $errorMessage = "Erreur lors de la création de la facture.";
