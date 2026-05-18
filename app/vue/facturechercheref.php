@@ -8,7 +8,8 @@
             class="text-warning">Les factures en brouillon ne peuvent être recherchées par leurs références</span>
         veuillez les visualiser dans la liste des factures ou les rechercher par id.</span></p>
 
-    <input type="text" name="" id="reference" placeholder="Référence de la facture" class="form-control w-25 mt-5">
+    <input type="text" name="" id="reference" placeholder="Référence de la facture"
+        class="form-control w-100 w-sm-50 w-md-25 mt-5">
 
     <script>
         document.getElementById('reference').addEventListener('keypress', function (event) {

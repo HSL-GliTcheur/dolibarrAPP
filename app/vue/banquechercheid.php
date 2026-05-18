@@ -4,7 +4,7 @@
         <h1>Choisissez un ID de compte à visualiser</h1>
     </div>
     <p>Saisissez l'ID et appuyez sur <strong>Entrée</strong>.</p>
-    <input type="number" id="rechercheId" placeholder="ID du Compte" class="form-control w-25 mt-5">
+    <input type="number" id="rechercheId" placeholder="ID du Compte" class="form-control w-100 w-sm-50 w-md-25 mt-5">
 
     <script>
         document.getElementById('rechercheId').addEventListener('keypress', function (e) {

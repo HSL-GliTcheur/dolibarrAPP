@@ -169,104 +169,109 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-hover table-striped mb-0">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Description</th>
-                                    <th class="text-center">Qté</th>
-                                    <th class="text-end">PU HT</th>
-                                    <th class="text-end">TVA</th>
-                                    <th class="text-end">Total TTC</th>
-                                    <th class="text-center">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (isset($invoice['lines']) && count($invoice['lines']) > 0): ?>
-                                    <?php foreach ($invoice['lines'] as $ligne): ?>
-                                        <tr>
-                                            <td>
-                                                <?php if (isset($ligne['product_type']) && $ligne['product_type'] == 1): ?>
-                                                    <span class="badge bg-secondary">Service</span>
-                                                <?php else: ?>
-                                                    <span class="badge bg-info text-dark">Produit</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <?= nl2br(htmlspecialchars($ligne['desc'] ?? 'Sans description')) ?>
-                                            </td>
-                                            <td class="text-center"><?= $ligne['qty'] ?></td>
-                                            <td class="text-end"><?= number_format($ligne['subprice'], 2) ?> €</td>
-                                            <td class="text-end"><?= number_format($ligne['tva_tx'], 1) ?> %</td>
-                                            <td class="text-end fw-bold"><?= number_format($ligne['total_ttc'], 2) ?> €</td>
-                                            <td class="text-center">
-                                                <?php if ($invoice['status'] == 0): ?>
-                                                    <button type="button" class="btn btn-sm btn-outline-danger"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalSupprimerLigne_<?= $ligne['id'] ?>">
-                                                        <i class="bi bi-trash"></i>
-                                                    </button>
-                                                <?php endif; ?>
-                                            </td>
-                                        </tr>
+                        <div class="table-responsive mt-4">
+                            <table class="table table-hover table-striped mb-0">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                        <th class="text-center">Qté</th>
+                                        <th class="text-end">PU HT</th>
+                                        <th class="text-end">TVA</th>
+                                        <th class="text-end">Total TTC</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (isset($invoice['lines']) && count($invoice['lines']) > 0): ?>
+                                        <?php foreach ($invoice['lines'] as $ligne): ?>
+                                            <tr>
+                                                <td>
+                                                    <?php if (isset($ligne['product_type']) && $ligne['product_type'] == 1): ?>
+                                                        <span class="badge bg-secondary">Service</span>
+                                                    <?php else: ?>
+                                                        <span class="badge bg-info text-dark">Produit</span>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <?= nl2br(htmlspecialchars($ligne['desc'] ?? 'Sans description')) ?>
+                                                </td>
+                                                <td class="text-center"><?= $ligne['qty'] ?></td>
+                                                <td class="text-end"><?= number_format($ligne['subprice'], 2) ?> €</td>
+                                                <td class="text-end"><?= number_format($ligne['tva_tx'], 1) ?> %</td>
+                                                <td class="text-end fw-bold"><?= number_format($ligne['total_ttc'], 2) ?> €</td>
+                                                <td class="text-center">
+                                                    <?php if ($invoice['status'] == 0): ?>
+                                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalSupprimerLigne_<?= $ligne['id'] ?>">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tr>
 
-                                        <?php if ($invoice['status'] == 0): ?>
-                                            <div class="modal fade" id="modalSupprimerLigne_<?= $ligne['id'] ?>" tabindex="-1"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header bg-danger text-white">
-                                                            <h5 class="modal-title"><i class="bi bi-exclamation-triangle"></i>
-                                                                Confirmer la suppression</h5>
-                                                            <button type="button" class="btn-close btn-close-white"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <?php if ($invoice['status'] == 0): ?>
+                                                <div class="modal fade" id="modalSupprimerLigne_<?= $ligne['id'] ?>" tabindex="-1"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header bg-danger text-white">
+                                                                <h5 class="modal-title"><i class="bi bi-exclamation-triangle"></i>
+                                                                    Confirmer la suppression</h5>
+                                                                <button type="button" class="btn-close btn-close-white"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <form action="/Dolibarrapp/facture/supprimerLigne/<?= $invoice['id'] ?>"
+                                                                method="POST">
+                                                                <div class="modal-body">
+                                                                    <p>Êtes-vous sûr de vouloir supprimer définitivement cet élément
+                                                                        de
+                                                                        la facture ?</p>
+                                                                    <p class="text-center fs-5">
+                                                                        <strong><?= htmlspecialchars($ligne['desc']) ?></strong>
+                                                                    </p>
+
+                                                                    <input type="hidden" name="lineid" value="<?= $ligne['id'] ?>">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Annuler</button>
+                                                                    <button type="submit" class="btn btn-danger">Oui,
+                                                                        supprimer</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
-                                                        <form action="/Dolibarrapp/facture/supprimerLigne/<?= $invoice['id'] ?>"
-                                                            method="POST">
-                                                            <div class="modal-body">
-                                                                <p>Êtes-vous sûr de vouloir supprimer définitivement cet élément de
-                                                                    la facture ?</p>
-                                                                <p class="text-center fs-5">
-                                                                    <strong><?= htmlspecialchars($ligne['desc']) ?></strong>
-                                                                </p>
-
-                                                                <input type="hidden" name="lineid" value="<?= $ligne['id'] ?>">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Annuler</button>
-                                                                <button type="submit" class="btn btn-danger">Oui, supprimer</button>
-                                                            </div>
-                                                        </form>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="7" class="text-center text-muted py-4">Aucune ligne facturée pour le
-                                            moment.</td>
-                                    </tr>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="7" class="text-center text-muted py-4">Aucune ligne facturée pour
+                                                le
+                                                moment.</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                                <?php if (isset($invoice['lines']) && count($invoice['lines']) > 0): ?>
+                                    <tfoot class="table-light">
+                                        <tr>
+                                            <td colspan="5" class="text-end fw-bold">TOTAL HT :</td>
+                                            <td class="text-end fw-bold" colspan="2">
+                                                <?= number_format($invoice['total_ht'], 2) ?> €
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5" class="text-end fw-bold">TOTAL TTC :</td>
+                                            <td class="text-end fw-bold fs-5 text-primary" colspan="2">
+                                                <?= number_format($invoice['total_ttc'], 2) ?> €
+                                            </td>
+                                        </tr>
+                                    </tfoot>
                                 <?php endif; ?>
-                            </tbody>
-                            <?php if (isset($invoice['lines']) && count($invoice['lines']) > 0): ?>
-                                <tfoot class="table-light">
-                                    <tr>
-                                        <td colspan="5" class="text-end fw-bold">TOTAL HT :</td>
-                                        <td class="text-end fw-bold" colspan="2">
-                                            <?= number_format($invoice['total_ht'], 2) ?> €
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5" class="text-end fw-bold">TOTAL TTC :</td>
-                                        <td class="text-end fw-bold fs-5 text-primary" colspan="2">
-                                            <?= number_format($invoice['total_ttc'], 2) ?> €
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            <?php endif; ?>
-                        </table>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

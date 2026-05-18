@@ -34,7 +34,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 mt-md-0 mt-5">
             <ul class="list-group shadow-sm">
                 <li class="list-group-item"><strong>Type de Compte :</strong>
                     <?php

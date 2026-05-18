@@ -6,7 +6,8 @@
 
     <p>Appuyez sur <strong>Entrée</strong> après avoir saisi l'ID de la facture.</p>
 
-    <input type="number" name="" id="numero" placeholder="ID de la facture" class="form-control w-25 mt-5">
+    <input type="number" name="" id="numero" placeholder="ID de la facture"
+        class="form-control w-100 w-sm-50 w-md-25 mt-5">
 
     <script>
         document.getElementById('numero').addEventListener('keypress', function (event) {

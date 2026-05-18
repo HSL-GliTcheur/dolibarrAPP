@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <ul class="list-group mt-5 w-50">
+    <ul class="list-group mt-5 w-100 w-md-75 w-lg-50">
         <li class="list-group-item"><strong>ID :</strong>
             <?= $unTiers['id'] ?>
         </li>
