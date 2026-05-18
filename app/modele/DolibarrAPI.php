@@ -196,4 +196,20 @@ class DolibarrAPI
         return $this->request("/thirdparties/" . $id, "DELETE");
     }
 
+
+    // ------------------------
+    // ------------ Authentifaction ------------
+    // ------------------------
+
+    public function checkLogin(string $login)
+    {
+        // On appelle l'URL Dolibarr : /users/login/{login}
+        $result = $this->request("/users/login/" . $login);
+
+        // Si Dolibarr renvoie un objet avec un ID, c'est que l'utilisateur existe
+        if (isset($result['id'])) {
+            return $result;
+        }
+        return false;
+    }
 }

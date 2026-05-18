@@ -1,6 +1,8 @@
 <?php
 // Dans public/index.php
 
+session_start();
+
 // 1. On récupère et on découpe l'URL (ex: facture/voir/2)
 $url = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 
@@ -27,6 +29,10 @@ switch ($route) {
 
     case 'depense':
         $nom_controleur = 'ControleurDepense';
+        break;
+
+    case 'auth':
+        $nom_controleur = 'ControleurAuth';
         break;
 
     case 'accueil':
